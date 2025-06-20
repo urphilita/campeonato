@@ -1,90 +1,161 @@
+/* Paleta de azules: */
+/* #0056b3 - Azul Oscuro Primario */
+/* #007bff - Azul Principal (Botones, encabezados de tabla) */
+/* #e0f7fa - Azul Claro Suave (Fondo de página) */
+/* #bbdefb - Azul Celeste (Filas pares de tabla) */
+/* #0d47a1 - Azul Muy Oscuro (Bordes, hover de botones) */
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #e0f7fa; /* Azul claro suave para el fondo */
     color: #333;
+    line-height: 1.6;
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 960px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
-    color: #0056b3;
-    margin-bottom: 30px;
+    color: #0056b3; /* Azul oscuro primario para el título */
+    margin-bottom: 35px;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .category-buttons {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
+    gap: 15px; /* Espacio entre los botones */
 }
 
 .category-btn {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul principal para los botones */
     color: white;
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .category-btn:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Tono más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .category-btn.active {
-    background-color: #0056b3; /* Color para el botón activo */
-    border: 2px solid #004085;
+    background-color: #0d47a1; /* Azul muy oscuro para el botón activo */
+    border: 2px solid #0056b3; /* Borde sutil para resaltar */
+    transform: translateY(0);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra interior para indicar activo */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    margin-top: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que las esquinas redondeadas se apliquen */
 }
 
 table thead th {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul principal para el encabezado de la tabla */
     color: white;
-    padding: 12px 15px;
+    padding: 15px 20px;
     text-align: left;
-    border-bottom: 2px solid #ddd;
+    font-weight: 700;
+    font-size: 1.1em;
+    border-bottom: 2px solid #0056b3; /* Borde más grueso para separación */
 }
 
 table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #bbdefb; /* Azul celeste para filas pares */
 }
 
 table tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #90caf9; /* Tono más claro de azul al pasar el ratón */
 }
 
 table tbody td {
-    padding: 10px 15px;
-    border-bottom: 1px solid #eee;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e0e0e0; /* Borde sutil para celdas */
+    font-size: 0.95em;
+    color: #444;
+}
+
+table tbody tr:last-child td {
+    border-bottom: none; /* Sin borde en la última fila */
 }
 
 #loading-message, #error-message {
     text-align: center;
-    margin-top: 20px;
-    font-size: 1.1em;
+    margin-top: 30px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #555;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 #error-message {
-    color: red;
+    color: #d32f2f; /* Rojo para mensajes de error */
+    background-color: #ffebee;
 }
 
 .hidden {
     display: none;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 15px auto;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .category-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    table thead th,
+    table tbody td {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    .category-buttons {
+        flex-direction: column; /* Apila los botones en pantallas muy pequeñas */
+        align-items: center;
+    }
+    .category-btn {
+        width: 80%; /* Los botones ocupan más ancho */
+        max-width: 250px;
+    }
 }

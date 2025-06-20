@@ -42,13 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dataRows = rows.slice(1);
 
                 if (dataRows.length === 0 || (dataRows.length === 1 && dataRows[0].trim() === '')) {
-                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No hay resultados disponibles para esta categoría.</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No hay resultados disponibles para esta categoría.</td></tr>';
                     return;
                 }
 
                 dataRows.forEach(row => {
                     const columns = row.split(','); // Divide por comas
-                    if (columns.length === 7) { // Asegúrate de que haya 7 columnas
+                    if (columns.length === 8) { // Asegúrate de que haya 8 columnas
                         const tr = document.createElement('tr');
                         columns.forEach(col => {
                             const td = document.createElement('td');
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error fetching data:', error);
                 loadingMessage.classList.add('hidden'); // Oculta el mensaje de carga
                 errorMessage.classList.remove('hidden'); // Muestra el mensaje de error
-                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No se pudieron cargar los datos para esta categoría.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No se pudieron cargar los datos para esta categoría.</td></tr>';
             });
     };
 
