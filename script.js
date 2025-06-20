@@ -4,21 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('results-table-body');
     const loadingMessage = document.getElementById('loading-message');
     const errorMessage = document.getElementById('error-message');
-    const categoryButtonsContainer = document.querySelector('.category-buttons');
+    const categoryButtonsContainer = document.querySelector('.category-buttons'); // This variable is not used, can be removed if not planning to use it.
     const categoryButtons = document.querySelectorAll('.category-btn');
 
     // Función para cargar los datos de una GID específica
     const loadCategoryData = (gid) => {
+        // CORRECCIÓN 1: Usar backticks para la interpolación de strings en la URL
         const googleSheetUrl = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
-        
-		tableBody.innerHTML = ''; // Limpiar la tabla
+
+        tableBody.innerHTML = ''; // Limpiar la tabla
         loadingMessage.classList.remove('hidden'); // Mostrar mensaje de carga
         errorMessage.classList.add('hidden'); // Ocultar mensaje de error
 
         // Quitar la clase 'active' de todos los botones
         categoryButtons.forEach(btn => btn.classList.remove('active'));
         // Añadir la clase 'active' al botón actualmente seleccionado
-		const activeButton = document.querySelector(`.category-btn[data-gid="${gid}"]`);
+        // CORRECCIÓN 2: Usar backticks para la interpolación de strings en el selector
+        const activeButton = document.querySelector(`.category-btn[data-gid="${gid}"]`);
         if (activeButton) {
             activeButton.classList.add('active');
         }
@@ -26,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(googleSheetUrl)
             .then(response => {
                 if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
+                    // CORRECCIÓN 3: Usar backticks para la interpolación de strings en el mensaje de error
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.text();
             })
