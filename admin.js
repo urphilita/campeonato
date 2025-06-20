@@ -1,4 +1,4 @@
-const FORM_URL = "https://script.google.com/macros/s/AKfycbyzswGJ_Ce67D2xBf3pAiWIC9WAm-zQf3IwVKGMyLBuDwFzURsxlaalad9Nf__55Ls/exec";
+const FORM_URL = "https://script.google.com/macros/s/AKfycbz6Aie4w1fprPpqPZ5IQUZcaNtdYR-t62wdl7F-1AD8a8Q-Yee-Zro2tOOA6Te8XoFr/exec";
 
 document.getElementById("formulario").addEventListener("submit", function(e) {
   e.preventDefault();
