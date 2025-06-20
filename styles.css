@@ -104,6 +104,26 @@ table tbody td {
 table tbody tr:last-child td {
     border-bottom: none; /* Sin borde en la última fila */
 }
+.table-responsive {
+    width: 100%; /* Asegura que el contenedor ocupe el 100% del ancho disponible */
+    overflow-x: auto; /* Permite el scroll horizontal si el contenido es muy ancho */
+    -webkit-overflow-scrolling: touch; /* Mejora el scroll en dispositivos iOS */
+}
+
+/* El estilo de la tabla se mantiene igual, pero ahora está contenida */
+table {
+    min-width: 700px; /* O un valor que asegure que no se comprima demasiado */
+    /* Asegura que la tabla no se contraiga más allá de un cierto punto,
+       permitiendo que 'overflow-x: auto' entre en acción.
+       Ajusta este valor (e.g., 600px, 800px) según el contenido más ancho que esperas.
+       Si tus columnas son muy largas, podrías necesitar un valor mayor. */
+    width: 100%; /* Mantiene el 100% cuando hay espacio */
+    border-collapse: collapse;
+    margin-top: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
 
 #loading-message, #error-message {
     text-align: center;
