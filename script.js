@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(googleSheetUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new new Error('HTTP error! status: ${response.status}');
+                    throw new Error('HTTP error! status: ${response.status}');
                 }
                 return response.text();
             })
