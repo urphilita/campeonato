@@ -179,3 +179,29 @@ table {
         max-width: 250px;
     }
 }
+/* Estilos para el indicador de scroll */
+.scroll-indicator {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666;
+    background-color: #f8f8f8;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px dashed #ccc;
+    display: none; /* Por defecto oculto, se mostrará en media queries */
+    opacity: 0; /* Para una transición de aparición suave */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.scroll-indicator.visible {
+    opacity: 1; /* Para mostrarlo */
+}
+
+/* Ocultar el indicador por defecto y mostrarlo solo en móviles */
+@media (max-width: 768px) {
+    /* Mostrar el indicador en pantallas pequeñas */
+    .scroll-indicator {
+        display: block; /* Muestra el div */
+    }
+}
