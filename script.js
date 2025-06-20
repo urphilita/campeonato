@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para cargar los datos de una GID específica
     const loadCategoryData = (gid) => {
         // CORRECCIÓN 1: Usar backticks para la interpolación de strings en la URL
-        const googleSheetUrl = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
+        const googleSheetUrl = `https://docs.google.com/spreadsheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
 
         tableBody.innerHTML = ''; // Limpiar la tabla
         loadingMessage.classList.remove('hidden'); // Mostrar mensaje de carga
