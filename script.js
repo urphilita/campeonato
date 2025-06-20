@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para cargar los datos de una GID específica
     const loadCategoryData = (gid) => {
-        const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv';
-
-        tableBody.innerHTML = ''; // Limpiar la tabla
+        const googleSheetUrl = `https://docs.google.com/spreadsheets/d/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
+        
+		tableBody.innerHTML = ''; // Limpiar la tabla
         loadingMessage.classList.remove('hidden'); // Mostrar mensaje de carga
         errorMessage.classList.add('hidden'); // Ocultar mensaje de error
 
         // Quitar la clase 'active' de todos los botones
         categoryButtons.forEach(btn => btn.classList.remove('active'));
         // Añadir la clase 'active' al botón actualmente seleccionado
-        const activeButton = document.querySelector('.category-btn[data-gid="${gid}"]');
+		const activeButton = document.querySelector(`.category-btn[data-gid="${gid}"]`);
         if (activeButton) {
             activeButton.classList.add('active');
         }
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(googleSheetUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('HTTP error! status: ${response.status}');
+					throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.text();
             })
