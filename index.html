@@ -11,7 +11,7 @@
         <h1>Resultados de Futsal por Categoría</h1>
 
         <div class="category-buttons">
-            <button class="category-btn" data-gid="0">Infantil</button>
+            <button class="category-btn" data-gid="0">Futsal categoría damas</button>
             <button class="category-btn" data-gid="325768691">Juvenil</button>
             <button class="category-btn" data-gid="246596696">Adultos</button>
             </div>
@@ -22,17 +22,18 @@
                     <tr>
                         <th>Categoría</th>
                         <th>Ronda</th>
+						<th>Hora</th>
                         <th>Equipo A</th>
+						<th>Score A</th>
                         <th>Equipo B</th>
-                        <th>Score A</th>
                         <th>Score B</th>
-                        <th>Fecha Futsal</th>
+                        
                     </tr>
                 </thead>
                 <tbody id="results-table-body">
                     </tbody>
             </table>
-            <p id="loading-message">Cargando resultados...</p>
+            <p id="loading-message" class="hidden">Cargando resultados...</p>
             <p id="error-message" class="hidden">Hubo un error al cargar los datos. Por favor, intenta de nuevo más tarde.</p>
         </div>
     </div>
