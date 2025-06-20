@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resultados del Torneo</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Futsal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header><h1>Resultados del Torneo</h1></header>
-  <main><div id="resultados"></div></main>
-  <script src="index.js"></script>
+    <div class="container">
+        <h1>Resultados de Futsal por Categoría</h1>
+
+        <div class="category-buttons">
+            <button class="category-btn" data-gid="0">Infantil</button>
+            <button class="category-btn" data-gid="325768691">Juvenil</button>
+            <button class="category-btn" data-gid="246596696">Adultos</button>
+            </div>
+
+        <div id="results-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Ronda</th>
+                        <th>Equipo A</th>
+                        <th>Equipo B</th>
+                        <th>Score A</th>
+                        <th>Score B</th>
+                        <th>Fecha Futsal</th>
+                    </tr>
+                </thead>
+                <tbody id="results-table-body">
+                    </tbody>
+            </table>
+            <p id="loading-message">Cargando resultados...</p>
+            <p id="error-message" class="hidden">Hubo un error al cargar los datos. Por favor, intenta de nuevo más tarde.</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
