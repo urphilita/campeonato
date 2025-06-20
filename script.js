@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dataRows = rows.slice(1);
 
                 if (dataRows.length === 0 || (dataRows.length === 1 && dataRows[0].trim() === '')) {
-                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No hay resultados disponibles para esta categoría.</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No hay resultados disponibles para esta categoríasasas.</td></tr>';
                     return;
                 }
 
