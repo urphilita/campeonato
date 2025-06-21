@@ -3,45 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados de Futsal</title>
+    <title>Resultados campeonato</title>
     <link rel="stylesheet" href="styles.css">
+	<style>
+        /* Estilo básico para ocultar elementos */
+        .hidden {
+            display: none;
+        }
+        /* Estilo para los botones secundarios, si quieres que se vean diferentes */
+        .sub-category-btn {
+            background-color: #28a745; /* Un color diferente para distinguirlos */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px; /* Separación del botón principal */
+            font-size: 0.9em;
+        }
+        .sub-category-btn:hover {
+            background-color: #218838;
+        }
+        /* Contenedor para alinear el botón secundario */
+        #secondary-buttons-container {
+            margin-top: 10px;
+            text-align: center; /* Centra los botones si la navegación es centrada */
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>IV Campeonato Martín Cárdenas Hermosa</h1>
-
-        <div class="category-buttons">
-            <button class="category-btn" data-gid="0">Futsal categoría damas</button>
+	<header>
+        <h1>Resultados del Campeonato</h1>
+        <nav id="main-navigation"> 
+		    <button class="category-btn" data-gid="0">Futsal damas</button>
             <button class="category-btn" data-gid="325768691">Basquet Damas</button>
-            <button class="category-btn" data-gid="246596696">Adultos</button>
-        </div>
+            <button class="category-btn" data-gid="987654321">Adultos</button>
+            <button class="category-btn" data-gid="555116046" data-type="fixture-futsal-damas">Futsal Damas</button>
+            </nav>
 
-	<div class="table-responsive">	
-        <div id="results-table-container">
-            <table>
+        <div id="secondary-buttons-container" class="hidden">
+            <button id="view-standings-btn" class="sub-category-btn" data-gid="555116046" data-type="tabla-posiciones">Ver Tabla de Posiciones</button>
+        </div>
+    </header>
+    <main>
+        <div id="results-container">
+            <h2>Resultados de Partidos</h2>
+            <table id="results-table">
                 <thead>
-                    <tr>
+                    <tr id="table-headers">
                         <th>Categoría</th>
                         <th>Ronda</th>
-						<th>Hora</th>
+                        <th>Hora</th>
                         <th>Equipo A</th>
-						<th>Score A</th>
+                        <th>Score A</th>
                         <th>Equipo B</th>
                         <th>Score B</th>
                         <th>Estado</th>
                     </tr>
                 </thead>
-                <tbody id="results-table-body">
+                <tbody id="table-body">
                     </tbody>
             </table>
-		</div>
-		<div id="scroll-indicator" class="scroll-indicator hidden-desktop">
-            <p>Desliza para ver más &gt;&gt;</p>
+            <div id="loading-message" class="hidden">Cargando datos...</div>
+            <div id="error-message" class="hidden"></div>
         </div>
-            <p id="loading-message" class="hidden">Cargando resultados...</p>
-            <p id="error-message" class="hidden"> Hubo un error al cargar los datos. Por favor, intenta de nuevo más tarde.</p>
+
+        <div class="table-responsive">
+            <div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
         </div>
-    </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
