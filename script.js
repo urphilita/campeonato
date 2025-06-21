@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewStandingsBtn = document.getElementById('view-standings-btn');
 
     const GID_COL_SPANS = {
-        '0': 8,             // GID de Infantil
-        '325768691': 8,     // GID de Juvenil
-        '987654321': 8,     // GID de Adultos
+        '0': 8,             // GID futsal damas
+        '325768691': 8,     // GID basquet damas
+        '246596696': 8,     // GID futsal senior
         '555116046': 9      // GID de Futsal Damas - Tabla de Posiciones
     };
 
