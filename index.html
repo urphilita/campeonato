@@ -6,28 +6,32 @@
     <title>Resultados campeonato</title>
     <link rel="stylesheet" href="styles.css">
 	<style>
-        /* Estilo básico para ocultar elementos */
-        .hidden {
-            display: none;
+        /* Tus estilos para .hidden, .sub-category-btn etc. */
+        .hidden { display: none; }
+        .sub-category-btn { /* tus estilos */ }
+        #secondary-buttons-container { /* tus estilos */ }
+        /* Si tu tabla puede desbordarse en móvil */
+        .table-responsive {
+            overflow-x: auto; /* Permite desplazamiento horizontal */
+            -webkit-overflow-scrolling: touch; /* Para un scroll más suave en iOS */
+            padding-bottom: 10px; /* Espacio para el indicador de scroll */
+            position: relative; /* Para posicionar el indicador */
         }
-        /* Estilo para los botones secundarios, si quieres que se vean diferentes */
-        .sub-category-btn {
-            background-color: #28a745; /* Un color diferente para distinguirlos */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            background-color: rgba(0,0,0,0.6);
             color: white;
-            padding: 8px 15px;
-            border: none;
+            padding: 3px 8px;
             border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px; /* Separación del botón principal */
-            font-size: 0.9em;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none; /* Para que no bloquee interacciones */
         }
-        .sub-category-btn:hover {
-            background-color: #218838;
-        }
-        /* Contenedor para alinear el botón secundario */
-        #secondary-buttons-container {
-            margin-top: 10px;
-            text-align: center; /* Centra los botones si la navegación es centrada */
+        .scroll-indicator.visible {
+            opacity: 1;
         }
     </style>
 </head>
@@ -38,16 +42,14 @@
 		    <button class="category-btn" data-gid="0">Futsal damas</button>
             <button class="category-btn" data-gid="325768691">Basquet Damas</button>
             <button class="category-btn" data-gid="987654321">Adultos</button>
-            <button class="category-btn" data-gid="555116046" data-type="fixture-futsal-damas">Futsal Damas</button>
-            </nav>
+        </nav>
 
         <div id="secondary-buttons-container" class="hidden">
             <button id="view-standings-btn" class="sub-category-btn" data-gid="555116046" data-type="tabla-posiciones">Ver Tabla de Posiciones</button>
         </div>
     </header>
     <main>
-        <div id="results-container">
-            <h2>Resultados de Partidos</h2>
+        <div class="table-responsive">
             <table id="results-table">
                 <thead>
                     <tr id="table-headers">
@@ -64,13 +66,11 @@
                 <tbody id="table-body">
                     </tbody>
             </table>
+			<div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
+			</div>
             <div id="loading-message" class="hidden">Cargando datos...</div>
             <div id="error-message" class="hidden"></div>
-        </div>
-
-        <div class="table-responsive">
-            <div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
-        </div>
+               
     </main>
     <script src="script.js"></script>
 </body>
