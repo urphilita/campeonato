@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '0': 8,             // GID futsal damas
         '325768691': 8,     // GID basquet damas
         '246596696': 8,     // GID futsal senior
-        '555116046': 9      // GID de Futsal Damas - Tabla de Posiciones
+        '555116046': 9,      // GID de Futsal Damas - Tabla de Posiciones
+		'876876790': 10
     };
 
     const TABLE_HEADERS = {
@@ -32,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         'tabla-posiciones': [
             'PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG'
+        ],
+		'futsal-general': [
+            'SERIE','PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG'
         ]
     };
 
