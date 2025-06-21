@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '555116046': 9,     // GID de Futsal Damas - Tabla de Posiciones (Específica)
 		'1851467359':10,
         '876876790': 10,    // GID de Futsal General - Tabla de Posiciones
-        '475772247': 8,
-		
+     
         // *** ¡NUEVOS GIDs Y NÚMEROS DE COLUMNAS PARA FÚTBOL! ***
         // REEMPLAZA 'GID_FUTBOL_SENIOR_POSICIONES' Y 'GID_FUTBOL_GENERAL_POSICIONES'
         // Y AJUSTA LOS NÚMEROS DE COLUMNAS (9 y 10 son suposiciones)
