@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reemplaza con el ID de tu Google Sheet
     const BASE_SHEET_ID = '2PACX-1vT8wuuY42qT9NQKU7T1-rRgf8jCn1V7SbqvHamgVHGbmos0qWY15BYxJhePXIrYv7Oye-U4gsWKKgG6';
 
-    // *** ¡¡¡CORRECCIÓN AQUÍ!!! Asegúrate de que el ID coincide con el HTML ('table-body') ***
     const tableBody = document.getElementById('table-body');
-    // *** ¡¡¡Y AQUÍ!!! Asegúrate de que el ID coincide con el HTML ('table-headers') ***
     const tableHeadersRow = document.getElementById('table-headers');
-
     const loadingMessage = document.getElementById('loading-message');
     const errorMessage = document.getElementById('error-message');
     const categoryButtons = document.querySelectorAll('.category-btn');
@@ -15,38 +12,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const secondaryButtonsContainer = document.getElementById('secondary-buttons-container');
     const viewStandingsBtn = document.getElementById('view-standings-btn');
+    const viewFutsalGeneralStandingsBtn = document.getElementById('view-futsal-general-standings-btn');
+    // *** ¡NUEVAS REFERENCIAS A LOS BOTONES DE FÚTBOL! ***
+    const viewFutbolSeniorStandingsBtn = document.getElementById('view-futbol-senior-standings-btn');
+    const viewFutbolGeneralStandingsBtn = document.getElementById('view-futbol-general-standings-btn');
+
 
     const GID_COL_SPANS = {
-        '0': 8,             // GID futsal damas
-        '325768691': 8,     // GID basquet damas
-        '246596696': 8,     // GID futsal senior
-        '555116046': 9,      // GID de Futsal Damas - Tabla de Posiciones
-		'876876790': 10
+        '0': 8,             // GID futsal damas (Fixture)
+        '325768691': 8,     // GID basquet damas (Fixture)
+        '246596696': 8,     // GID futsal senior (Fixture)
+        '555116046': 9,     // GID de Futsal Damas - Tabla de Posiciones (Específica)
+        '876876790': 10,    // GID de Futsal General - Tabla de Posiciones
+
+        // *** ¡NUEVOS GIDs Y NÚMEROS DE COLUMNAS PARA FÚTBOL! ***
+        // REEMPLAZA 'GID_FUTBOL_SENIOR_POSICIONES' Y 'GID_FUTBOL_GENERAL_POSICIONES'
+        // Y AJUSTA LOS NÚMEROS DE COLUMNAS (9 y 10 son suposiciones)
+        'GID_FUTBOL_SENIOR_POSICIONES': 9, // Ejemplo: 9 columnas para Fútbol Senior
+        'GID_FUTBOL_GENERAL_POSICIONES': 10 // Ejemplo: 10 columnas para Fútbol General
     };
 
     const TABLE_HEADERS = {
         'default': [
             'Categoría', 'Ronda', 'Hora', 'Equipo A', 'Score A', 'Equipo B', 'Score B', 'Estado'
         ],
-        'fixture-futsal-damas': [ // Encabezados para el fixture de Futsal Damas
+        'fixture-futsal-damas': [
             'Categoría', 'Ronda', 'Hora', 'Equipo A', 'Score A', 'Equipo B', 'Score B', 'Estado'
         ],
         'tabla-posiciones': [
             'PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG'
         ],
-		'futsal-general': [
+        'futsal-general': [
             'SERIE','PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG'
+        ],
+        // *** ¡NUEVOS ENCABEZADOS PARA FÚTBOL! ***
+        'tabla-futbol-senior': [
+            'PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG' // Ajusta estos encabezados
+        ],
+        'tabla-futbol-general': [
+            'SERIE','PROMOCION', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PUNTOS', 'DG' // Ajusta estos encabezados
         ]
     };
 
     const loadCategoryData = (gid, dataType = 'default') => {
-        // Asegúrate de que los elementos existen antes de intentar usarlos
-        if (!tableBody || !tableHeadersRow || !loadingMessage || !errorMessage || !scrollIndicator || !tableResponsiveContainer) {
-            console.error("Error: Uno o más elementos HTML requeridos no fueron encontrados. Revisa tus IDs.");
-            return; // Detener la ejecución si faltan elementos
+        if (!tableBody || !tableHeadersRow || !loadingMessage || !errorMessage || !scrollIndicator || !tableResponsiveContainer || !secondaryButtonsContainer) {
+            console.error("Error: Uno o más elementos HTML requeridos no fueron encontrados. Revisa tus IDs o la estructura HTML.");
+            return;
         }
 
-        const googleSheetUrl = `https://docs.google.com/spreadsheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
+        const googleSheetUrl = `https://docs.google.com/sheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
 
         tableBody.innerHTML = '';
         loadingMessage.classList.remove('hidden');
@@ -59,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
             activeButton.classList.add('active');
         }
 
-        if (dataType === 'fixture-futsal-damas') {
+        // Lógica para mostrar/ocultar los botones secundarios
+        // Si el GID actual es el de "Futsal Damas" (fixture), muestra el contenedor
+        if (dataType === 'fixture-futsal-damas') { // O cualquier otro data-type que quieras que active estos botones
             secondaryButtonsContainer.classList.remove('hidden');
         } else {
             secondaryButtonsContainer.classList.add('hidden');
@@ -77,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(csvText => {
                 loadingMessage.classList.add('hidden');
                 console.log('--- CSV Text Received for GID:', gid, '---');
-                // console.log(csvText); // Descomentar para depuración
                 console.log('-------------------------');
 
                 const rows = csvText.split('\n');
@@ -169,18 +184,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // *** ¡¡¡CORRECCIÓN AQUÍ!!! Asegúrate de que el botón existe antes de añadir el listener ***
     if (viewStandingsBtn) {
         viewStandingsBtn.addEventListener('click', () => {
             const gid = viewStandingsBtn.dataset.gid;
             const dataType = viewStandingsBtn.dataset.type;
-            categoryButtons.forEach(btn => btn.classList.remove('active')); // Opcional: desactiva los botones principales
-            // viewStandingsBtn.classList.add('active'); // Opcional: activa este botón
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
             loadCategoryData(gid, dataType);
         });
     } else {
-        console.warn("Botón 'Ver Tabla de Posiciones' (id='view-standings-btn') no encontrado. Asegúrate de que está en tu HTML.");
+        console.warn("Botón 'Ver Tabla de Posiciones Futsal Damas' (id='view-standings-btn') no encontrado. Asegúrate de que está en tu HTML.");
     }
+
+    if (viewFutsalGeneralStandingsBtn) {
+        viewFutsalGeneralStandingsBtn.addEventListener('click', () => {
+            const gid = viewFutsalGeneralStandingsBtn.dataset.gid;
+            const dataType = viewFutsalGeneralStandingsBtn.dataset.type;
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            loadCategoryData(gid, dataType);
+        });
+    } else {
+        console.warn("Botón 'Ver Tabla General Futsal' (id='view-futsal-general-standings-btn') no encontrado. Asegúrate de que está en tu HTML.");
+    }
+
+    // *** ¡NUEVOS EVENT LISTENERS PARA LOS BOTONES DE FÚTBOL! ***
+    if (viewFutbolSeniorStandingsBtn) {
+        viewFutbolSeniorStandingsBtn.addEventListener('click', () => {
+            const gid = viewFutbolSeniorStandingsBtn.dataset.gid;
+            const dataType = viewFutbolSeniorStandingsBtn.dataset.type;
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            loadCategoryData(gid, dataType);
+        });
+    } else {
+        console.warn("Botón 'Ver Tabla Fútbol Senior' (id='view-futbol-senior-standings-btn') no encontrado. Asegúrate de que está en tu HTML.");
+    }
+
+    if (viewFutbolGeneralStandingsBtn) {
+        viewFutbolGeneralStandingsBtn.addEventListener('click', () => {
+            const gid = viewFutbolGeneralStandingsBtn.dataset.gid;
+            const dataType = viewFutbolGeneralStandingsBtn.dataset.type;
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            loadCategoryData(gid, dataType);
+        });
+    } else {
+        console.warn("Botón 'Ver Tabla Fútbol General' (id='view-futbol-general-standings-btn') no encontrado. Asegúrate de que está en tu HTML.");
+    }
+
 
     // Cargar la primera categoría por defecto al cargar la página
     if (categoryButtons.length > 0) {

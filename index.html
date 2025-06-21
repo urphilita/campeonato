@@ -3,20 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados campeonato</title>
-    <link rel="stylesheet" href="styles.css">
-	<style>
-        /* Tus estilos para .hidden, .sub-category-btn etc. */
+    <title>Tabla de Posiciones Futsal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tus estilos existentes para .hidden, .sub-category-btn etc. */
         .hidden { display: none; }
-        .sub-category-btn { /* tus estilos */ }
-        #secondary-buttons-container { /* tus estilos */ }
-        /* Si tu tabla puede desbordarse en móvil */
+        .sub-category-btn {
+            background-color: #28a745; /* Un color diferente para distinguirlos */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px; /* Separación entre botones secundarios */
+            font-size: 0.9em;
+            margin-bottom: 5px; /* Pequeño margen inferior si se apilan */
+        }
+        .sub-category-btn:hover {
+            background-color: #218838;
+        }
+        #secondary-buttons-container {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Estilos para el scroll indicator */
         .table-responsive {
-            overflow-x: auto; /* Permite desplazamiento horizontal */
-            -webkit-overflow-scrolling: touch; /* Para un scroll más suave en iOS */
-            padding-bottom: 10px; /* Espacio para el indicador de scroll */
-            position: relative; /* Para posicionar el indicador */
-			background-color:white;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+            position: relative;
         }
         .scroll-indicator {
             position: absolute;
@@ -29,7 +49,8 @@
             font-size: 0.8em;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
-            pointer-events: none; /* Para que no bloquee interacciones */
+            pointer-events: none;
+            z-index: 10;
         }
         .scroll-indicator.visible {
             opacity: 1;
@@ -37,19 +58,27 @@
     </style>
 </head>
 <body>
-	<header>
+    <header>
         <h1>Resultados del Campeonato</h1>
         <nav id="main-navigation"> 
 		    <button class="category-btn" data-gid="0" data-type="fixture-futsal-damas">Futsal damas</button>
             <button class="category-btn" data-gid="325768691">Basquet Damas</button>
             <button class="category-btn" data-gid="246596696">Futsal senior</button>
 			<button class="category-btn" data-gid="876876790">TDP senior</button>
-        </nav>
+			<button class="category-btn" data-gid="475772247">Futsal general</button>
+			        </nav>
 
         <div id="secondary-buttons-container" class="hidden">
-            <button id="view-standings-btn" class="sub-category-btn" data-gid="555116046" data-type="tabla-posiciones">Ver Tabla de Posiciones</button>
+            <button id="view-standings-btn" class="sub-category-btn" data-gid="555116046" data-type="tabla-posiciones">Ver Tabla de Posiciones Futsal Damas</button>
+            
+            <button id="view-futsal-general-standings-btn" class="sub-category-btn" data-gid="1851467359" data-type="futsal-general">Ver Tabla General Futsal</button>
+
+            <button id="view-futbol-senior-standings-btn" class="sub-category-btn" data-gid="876876790" data-type="tabla-futbol-senior">Ver Tabla Fútbol Senior</button>
+
+            <button id="view-futbol-general-standings-btn" class="sub-category-btn" data-gid="GID_FUTBOL_GENERAL_POSICIONES" data-type="tabla-futbol-general">Ver Tabla Fútbol General</button>
         </div>
     </header>
+
     <main>
         <div class="table-responsive">
             <table id="results-table">
@@ -68,12 +97,13 @@
                 <tbody id="table-body">
                     </tbody>
             </table>
-			<div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
-		</div>
-            <div id="loading-message" class="hidden">Cargando datos...</div>
-            <div id="error-message" class="hidden"></div>
-               
+            <div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
+        </div>
+
+        <div id="loading-message" class="hidden">Cargando datos...</div>
+        <div id="error-message" class="hidden"></div>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
