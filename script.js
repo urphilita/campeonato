@@ -22,9 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         '0': 8,             // GID futsal damas (Fixture)
         '325768691': 8,     // GID basquet damas (Fixture)
         '246596696': 8,     // GID futsal senior (Fixture)
+		'475772247': 8,
         '555116046': 9,     // GID de Futsal Damas - Tabla de Posiciones (Específica)
+		'1851467359':10,
         '876876790': 10,    // GID de Futsal General - Tabla de Posiciones
-
+        '475772247': 8,
+		
         // *** ¡NUEVOS GIDs Y NÚMEROS DE COLUMNAS PARA FÚTBOL! ***
         // REEMPLAZA 'GID_FUTBOL_SENIOR_POSICIONES' Y 'GID_FUTBOL_GENERAL_POSICIONES'
         // Y AJUSTA LOS NÚMEROS DE COLUMNAS (9 y 10 son suposiciones)
