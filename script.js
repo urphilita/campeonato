@@ -9,9 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollIndicator = document.getElementById('scroll-indicator'); // Nueva referencia al indicador
     const tableResponsiveContainer = document.querySelector('.table-responsive'); // Contenedor responsivo de la tabla
 
+    // Define el número esperado de columnas en tu CSV.
+    // ¡¡¡VERIFICA ESTE VALOR CON TU ARCHIVO CSV REAL!!!
+    // Abre el CSV descargado y cuenta las columnas.
+    const COL_SPAN = 7; // Ajusta esto si tu CSV tiene un número diferente de columnas (ej. 8)
+
     // Función para cargar los datos de una GID específica
     const loadCategoryData = (gid) => {
-        // CORRECCIÓN 1: Usar backticks para la interpolación de strings en la URL
         const googleSheetUrl = `https://docs.google.com/spreadsheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
 
         tableBody.innerHTML = ''; // Limpiar la tabla
@@ -22,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Quitar la clase 'active' de todos los botones
         categoryButtons.forEach(btn => btn.classList.remove('active'));
         // Añadir la clase 'active' al botón actualmente seleccionado
-        // CORRECCIÓN 2: Usar backticks para la interpolación de strings en el selector
         const activeButton = document.querySelector(`.category-btn[data-gid="${gid}"]`);
         if (activeButton) {
             activeButton.classList.add('active');
@@ -31,34 +34,59 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(googleSheetUrl)
             .then(response => {
                 if (!response.ok) {
-                    // CORRECCIÓN 3: Usar backticks para la interpolación de strings en el mensaje de error
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.text();
             })
             .then(csvText => {
                 loadingMessage.classList.add('hidden'); // Oculta el mensaje de carga
+
+                // --- DEBUGGING LOGS ---
+                console.log('--- CSV Text Received ---');
+                console.log(csvText); // Muestra el texto CSV completo
+                console.log('-------------------------');
+                // --- END DEBUGGING LOGS ---
+
                 const rows = csvText.split('\n');
 
-                // Eliminar la primera fila (encabezados) si tu CSV incluye encabezados
-                // Si tus datos no tienen encabezados, puedes comentar la siguiente línea
+                // --- DEBUGGING LOGS ---
+                console.log('Number of raw rows (including potential empty last line):', rows.length);
+                // --- END DEBUGGING LOGS ---
+
+                // Eliminar la primera fila (encabezados) si tu CSV incluye encabezados.
+                // Si tus datos NO tienen encabezados en la primera fila, cambia a `rows.slice(0)` o `const dataRows = rows;`
                 const dataRows = rows.slice(1);
 
-                // Assuming 8 columns now based on your updated `if (columns.length === 8)` check
-                // Make sure your table headers in index.html match your 8 columns in the sheet
-                // If you added a new 'Status' column, remember to update the HTML `<thead>` too.
-                // For now, I'll keep the colspan to 8 for the 'No hay resultados disponibles' message
-                const COL_SPAN = 7; // Adjust this if you truly have 8 display columns in HTML
-                                   // If you add a "status" column, it will be 8.
+                // --- DEBUGGING LOGS ---
+                console.log('Number of data rows after slicing (excluding header):', dataRows.length);
+                // --- END DEBUGGING LOGS ---
 
                 if (dataRows.length === 0 || (dataRows.length === 1 && dataRows[0].trim() === '')) {
                     tableBody.innerHTML = `<tr><td colspan="${COL_SPAN}" style="text-align: center;">No hay resultados disponibles para esta categoría.</td></tr>`;
+                    // --- DEBUGGING LOGS ---
+                    console.log('No data rows or only empty row detected after slicing.');
+                    // --- END DEBUGGING LOGS ---
                     return;
                 }
 
-                dataRows.forEach(row => {
+                dataRows.forEach((row, index) => {
+                    // Ignorar filas completamente vacías que puedan aparecer al final del CSV
+                    if (row.trim() === '') {
+                        console.log(`Skipping empty row at index ${index}.`);
+                        return;
+                    }
+
                     const columns = row.split(','); // Divide por comas
-                    if (columns.length === COL_SPAN) { // Ensure correct number of columns
+
+                    // --- DEBUGGING LOGS ---
+                    console.log(`Processing row ${index}: "${row}"`); // Muestra la fila original
+                    console.log(`Columns found in row ${index}: ${columns.length} ->`, columns); // Muestra cuántas columnas y sus contenidos
+                    // --- END DEBUGGING LOGS ---
+
+                    if (columns.length === COL_SPAN) { // Asegúrate de que haya el número correcto de columnas
+                        // --- DEBUGGING LOGS ---
+                        console.log(`Row ${index} matches COL_SPAN (${COL_SPAN}). Appending to table.`);
+                        // --- END DEBUGGING LOGS ---
                         const tr = document.createElement('tr');
                         columns.forEach(col => {
                             const td = document.createElement('td');
@@ -66,44 +94,44 @@ document.addEventListener('DOMContentLoaded', () => {
                             tr.appendChild(td);
                         });
                         tableBody.appendChild(tr);
+                    } else {
+                        // --- DEBUGGING LOGS ---
+                        console.warn(`Row ${index} has ${columns.length} columns, but expected ${COL_SPAN}. Skipping row: "${row}"`);
+                        // --- END DEBUGGING LOGS ---
                     }
                 });
 
                 // --- Lógica para mostrar/ocultar el indicador de scroll ---
-                // Solo si la pantalla es lo suficientemente pequeña y la tabla es más ancha que su contenedor
                 if (window.innerWidth <= 768) { // Basado en tu media query para móvil
-                    // Permitir un pequeño retraso para que el navegador renderice la tabla antes de calcular scrollWidth
                     setTimeout(() => {
-                        if (tableResponsiveContainer.scrollWidth > tableResponsiveContainer.clientWidth) {
-                            // La tabla es más ancha que su contenedor, mostrar el indicador
+                        const tableElement = tableResponsiveContainer.querySelector('table'); // Referencia a la tabla interna
+                        if (tableResponsiveContainer && tableElement && tableElement.scrollWidth > tableResponsiveContainer.clientWidth) {
                             scrollIndicator.classList.add('visible');
+                            console.log('Scroll indicator shown.');
                         } else {
-                            // La tabla no necesita scroll, ocultar el indicador
                             scrollIndicator.classList.remove('visible');
+                            console.log('Scroll indicator hidden (table fits or not mobile).');
                         }
                     }, 100); // Pequeño retraso
                 } else {
-                    // En escritorio, siempre ocultar el indicador
-                    scrollIndicator.classList.remove('visible');
+                    scrollIndicator.classList.remove('visible'); // En escritorio, siempre ocultar el indicador
+                    console.log('Scroll indicator hidden (desktop view).');
                 }
 
-                // Opcional: Ocultar el indicador después de que el usuario desliza
                 let scrolled = false;
                 const hideIndicatorOnScroll = () => {
-                    // Solo ocultar si realmente ha habido un desplazamiento horizontal significativo
-                    if (tableResponsiveContainer.scrollLeft > 10 && !scrolled) { // 10px es un umbral para considerar "deslizado"
+                    if (tableResponsiveContainer.scrollLeft > 10 && !scrolled) {
                         scrollIndicator.classList.remove('visible');
                         tableResponsiveContainer.removeEventListener('scroll', hideIndicatorOnScroll);
-                        scrolled = true; // Asegurarse de que solo se oculte una vez al primer scroll
+                        scrolled = true;
+                        console.log('Scroll indicator hidden on scroll.');
                     }
                 };
-                // Añadir el listener de scroll al contenedor de la tabla
                 tableResponsiveContainer.addEventListener('scroll', hideIndicatorOnScroll);
 
-                // También ocultar si el usuario hace clic/toca en la tabla (para dispositivos táctiles)
-                // Se usa { once: true } para que el listener se elimine automáticamente después del primer disparo
                 tableResponsiveContainer.addEventListener('touchstart', () => {
                     scrollIndicator.classList.remove('visible');
+                    console.log('Scroll indicator hidden on touchstart.');
                 }, { once: true });
 
             })
@@ -119,13 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Añadir un event listener a cada botón de categoría
     categoryButtons.forEach(button => {
         button.addEventListener('click', (event) => {
-            const selectedGid = event.target.dataset.gid; // Obtener el GID del atributo data-gid
+            const selectedGid = event.target.dataset.gid;
             loadCategoryData(selectedGid);
         });
     });
 
     // Cargar la primera categoría por defecto al cargar la página
-    // Esto asume que el primer botón en el HTML es el que quieres cargar por defecto.
     if (categoryButtons.length > 0) {
         loadCategoryData(categoryButtons[0].dataset.gid);
     }
