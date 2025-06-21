@@ -16,6 +16,7 @@
             -webkit-overflow-scrolling: touch; /* Para un scroll más suave en iOS */
             padding-bottom: 10px; /* Espacio para el indicador de scroll */
             position: relative; /* Para posicionar el indicador */
+			background-color:white;
         }
         .scroll-indicator {
             position: absolute;
@@ -39,7 +40,7 @@
 	<header>
         <h1>Resultados del Campeonato</h1>
         <nav id="main-navigation"> 
-		    <button class="category-btn" data-gid="0">Futsal damas</button>
+		    <button class="category-btn" data-gid="0" data-type="fixture-futsal-damas">Futsal damas</button>
             <button class="category-btn" data-gid="325768691">Basquet Damas</button>
             <button class="category-btn" data-gid="987654321">Adultos</button>
         </nav>
@@ -67,7 +68,7 @@
                     </tbody>
             </table>
 			<div id="scroll-indicator" class="scroll-indicator"><span>Desliza para ver más</span></div>
-			</div>
+		</div>
             <div id="loading-message" class="hidden">Cargando datos...</div>
             <div id="error-message" class="hidden"></div>
                
