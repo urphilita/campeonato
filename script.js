@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const googleSheetUrl = `https://docs.google.com/sheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
+        const googleSheetUrl = `https://docs.google.com/spreadsheets/d/e/${BASE_SHEET_ID}/pub?gid=${gid}&single=true&output=csv`;
 
         tableBody.innerHTML = '';
         loadingMessage.classList.remove('hidden');
