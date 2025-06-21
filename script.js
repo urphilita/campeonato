@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define el número esperado de columnas en tu CSV.
     // ¡¡¡VERIFICA ESTE VALOR CON TU ARCHIVO CSV REAL!!!
     // Abre el CSV descargado y cuenta las columnas.
-    const COL_SPAN = 7; // Ajusta esto si tu CSV tiene un número diferente de columnas (ej. 8)
+    const COL_SPAN = 8; // Ajusta esto si tu CSV tiene un número diferente de columnas (ej. 8)
 
     // Función para cargar los datos de una GID específica
     const loadCategoryData = (gid) => {
